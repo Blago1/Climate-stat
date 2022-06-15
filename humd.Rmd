@@ -1,0 +1,82 @@
+---
+title: "Global Annual Land and Marine Relative and Specific Humidity (%) (1973-2020)"
+author: Lewis Blagogie
+output: 
+  flexdashboard::flex_dashboard:
+    fig_width: 10
+    orientation: rows
+    vertical_layout: scroll
+    social: ["menu"]
+    fig_mobile: TRUE
+    theme:
+      google: sen
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+library(readr)
+humidity_RH_HadISDH_land_RH <- read_csv("C:/Users/Lewis/Desktop/clim data/humidity_RH_HadISDH land RH.csv")
+View(humidity_RH_HadISDH_land_RH)
+
+library(tidyverse)
+
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### 
+
+```{r, echo=FALSE, message=FALSE}
+
+rhl <- humidity_RH_HadISDH_land_RH %>% select(Year, rh = `HadISDH land RH (%)`)
+
+rh <- as.numeric("rh")
+
+ggplot(data = rhl, mapping = aes(x = Year, y = rh)) + geom_line(color = "red", size = 1, alpha = 0.8, linetype = 1) + geom_smooth() + xlab("Year") + 
+  ylab("Relative Humidity (%)") + ggtitle("Global Annual Relative Land Humidity") + scale_y_continuous(limits = c(-1, 0.90), breaks = seq(-1, 0.90, 0.2)) + theme_light(base_family = "serif")
+
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### 
+
+```{r, echo=FALSE, message=FALSE}
+
+library(readr)
+humidity_RH_HadISDH_marine_RH <- read_csv("C:/Users/Lewis/Desktop/clim data/humidity_RH_HadISDH marine RH.csv")
+View(humidity_RH_HadISDH_marine_RH)
+
+rhm <- humidity_RH_HadISDH_marine_RH %>% select(Year, "rhh" = `HadISDH marine RH (%)`)
+
+rhh <- as.numeric("rhh")
+
+ggplot(data = rhm, mapping = aes(x = Year, y = rhh)) + geom_line(color = "red", size = 1, alpha = 0.8, linetype = 1) + geom_smooth() + xlab("Year") + 
+  ylab("Relative Humidity (%)") + ggtitle("Global Annual Relative Marine Humidity") + scale_y_continuous(limits = c(-1, 0.90), breaks = seq(-1, 0.90, 0.3)) + theme_light(base_family = "serif")
+
+
+```
+
+### 
+
+```{r, echo=FALSE, message=FALSE}
+
+library(readr)
+humidity_q_HadISDH_land_q <- read_csv("C:/Users/Lewis/Desktop/clim data/humidity_q_HadISDH land q.csv")
+View(humidity_q_HadISDH_land_q)
+
+shl <- humidity_q_HadISDH_land_q %>% select(Year, "sh" = `HadISDH land q (g/kg)`)
+
+sh <- as.numeric("sh")
+
+ggplot(data = shl, mapping = aes(x = Year, y = sh)) + geom_line(color = "red", size = 1, alpha = 0.8, linetype = 1) + geom_smooth() + xlab("Year") + 
+  ylab("Relative Humidity (%)") + ggtitle("Global Annual Specific Land Humidity") + scale_y_continuous(limits = c(-1, 0.90), breaks = seq(-1, 0.90, 0.3)) + theme_light(base_family = "serif")
+
+
+```
+
