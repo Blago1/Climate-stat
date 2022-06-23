@@ -1,5 +1,5 @@
 ---
-title: "Threatened Species: Global Vertebrates (2021)"
+title: "Threatened Species: Global Inertebrates (2021)"
 author: "Lewis Blagogie"
 date: "6/22/2022"
 output: html_document
@@ -37,7 +37,7 @@ sp3 <- SYB64_313_202110_Threatened_Species %>% filter(...4 == 'Threatened Specie
 
 mapdata <- map_data("world") ##ggplot2
 View(mapdata)
-mapdata <- left_join(mapdata, sp1, by = "region")
+mapdata <- left_join(mapdata, sp2, by = "region")
 View(mapdata)
 
 mapdata1<-mapdata %>% filter(!is.na(mapdata$Value))
