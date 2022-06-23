@@ -1,0 +1,43 @@
+---
+title: "Global Death Rates from Air Pollution (2021)"
+author: "Lewis Blagogie"
+date: "6/23/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(sf)
+library(ggsn)
+library(readr)
+death_rates_total_air_pollution <- read_csv("C:/Users/Lewis/Downloads/death-rates-total-air-pollution.csv")
+View(death_rates_total_air_pollution)
+air <- death_rates_total_air_pollution
+
+
+```
+
+```{r, echo=FALSE, message=FALSE}
+air1 <- air %>% dplyr::select(Entity, Year, `Deaths - Cause: All causes - Risk: Air pollution - Sex: Both - Age: Age-standardized (Rate)` ) %>% rename("region" = Entity, "rate" = `Deaths - Cause: All causes - Risk: Air pollution - Sex: Both - Age: Age-standardized (Rate)`) %>% filter(Year == 2019) %>% dplyr::select(region, rate)
+```
+
+
+
+```{r, echo=FALSE, message=FALSE}
+
+mapdata <- map_data("world") ##ggplot2
+View(mapdata)
+mapdata <- left_join(mapdata, air1, by = "region")
+View(mapdata)
+
+mapdata1<-mapdata %>% filter(!is.na(mapdata$rate))
+View(mapdata1)
+
+map22 <- ggplot(mapdata1, aes( x = long, y = lat, group=group)) +
+  geom_polygon(aes(fill = rate), color = "black") + theme(legend.position = "right") + theme_bw() 
+
+
+map22
+```
+
