@@ -1,0 +1,55 @@
+---
+title: "Annual Sea Ice Extent Difference from 1978-2022"
+author: "Lewis Blagogie"
+date: '2022-06-25'
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+
+
+arctic_ice_NSIDC_v3 <- read_csv("C:/Users/Lewis/Desktop/DATA/clim data/arctic_ice_NSIDC v3.csv")
+View(arctic_ice_NSIDC_v3)
+arctic <- arctic_ice_NSIDC_v3 %>% dplyr::select(Year, `NSIDC v3 (millionkm2)`)
+
+## antarctic data
+library(readr)
+antarctic_ice_NSIDC_v3_Antarctic <- read_csv("C:/Users/Lewis/Desktop/DATA/clim data/antarctic_ice_NSIDC v3 Antarctic.csv")
+View(antarctic_ice_NSIDC_v3_Antarctic)
+antarctic <- antarctic_ice_NSIDC_v3_Antarctic %>% dplyr::select(Year, `NSIDC v3 Antarctic (millionkm2)`)
+```
+
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+## ggplot arctic
+ggplot(data = arctic, mapping = aes(x = Year, y = `NSIDC v3 (millionkm2)`)) + geom_line(color = "red", size = 1, alpha = 0.8, linetype = 1) + geom_smooth() + xlab("Year") + 
+  ylab("ice extent millionkm2") + ggtitle("Artic Sea Ice Extent") + scale_y_continuous(limits = c(-1, 0.90), breaks = seq(-1, 0.90, 0.2)) + theme_bw(base_family = "serif")
+
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## ggplot antarctic
+
+ggplot(data = antarctic, mapping = aes(x = Year, y = `NSIDC v3 Antarctic (millionkm2)`)) + geom_line(color = "red", size = 1, alpha = 0.8, linetype = 1) + geom_smooth() + xlab("Year") + 
+  ylab("ice extent millionkm2") + ggtitle("Antarctic Sea Ice Extent") + scale_y_continuous(limits = c(-1, 0.90), breaks = seq(-1, 0.90, 0.2)) + theme_bw(base_family = "serif")
+
+```
+
+ Why is Sea Ice Important?
+ 
+"Sea ice is an important component of the climate system because it regulates the transfer of heat and momentum between the atmosphere and the ocean. Sea ice is light and reflects much of the sunlight that reaches the surface. In contrast, open water is dark and absorbs light. Therefore, when sea ice melts revealing open water, more energy is absorbed at the surface. Sea ice also provides a barrier to the exchange of freshwater, gases, and tiny airborne solid and liquid particles known as aerosols.
+
+Plants and animals at all levels of the food chain live in or around sea ice. Sea ice is a major component of polar ecosystems.
+
+As sea ice is formed from frozen seawater and floats on the sea surface, melting of the ice does not contribute to sea level rise (unlike melting glaciers and ice sheets which are stores of frozen water on land and do add water to the ocean when they melt)". (source: climate.metoffice)
+
+
